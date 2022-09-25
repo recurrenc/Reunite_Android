@@ -1,4 +1,4 @@
-package com.authentication.newarchitecture;
+package com.reunite.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.authentication.BuildConfig;
-import com.authentication.newarchitecture.components.MainComponentsRegistry;
-import com.authentication.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.reunite.BuildConfig;
+import com.reunite.newarchitecture.components.MainComponentsRegistry;
+import com.reunite.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
