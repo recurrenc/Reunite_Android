@@ -11,14 +11,19 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import SocialAuthentication from '../../components/SocialAuthentication';
 import {useNavigation} from '@react-navigation/native';
+import {useForm} from 'react-hook-form';
 
 const SigninScreen = () => {
   const {height} = useWindowDimensions();
-  const {username, setUsername} = useState('');
-  const {password, setPassword} = useState('');
   const navigation = useNavigation();
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm();
 
-  const onSignInPress = () => {
+  const onSignInPress = data => {
+    console.log(data);
     navigation.navigate('Home');
   };
   const onForgotPasswordPressed = () => {
@@ -39,16 +44,24 @@ const SigninScreen = () => {
         />
         <CustomInput
           placeholder="Username"
-          value={username}
-          setValue={setUsername}
+          name={`username`}
+          control={control}
+          rules={{required: 'Username is required!'}}
         />
         <CustomInput
           placeholder="Password"
-          value={password}
-          setValue={setPassword}
+          name={`password`}
+          control={control}
           secureTextEntry
+          rules={{
+            required: 'Password is required!',
+            minLength: {
+              value: 8,
+              message: 'Password should be atleast 8 character long',
+            },
+          }}
         />
-        <CustomButton text={'Sign In'} onPress={onSignInPress} />
+        <CustomButton text={'Sign In'} onPress={handleSubmit(onSignInPress)} />
         <CustomButton
           text={'Forgot Password'}
           onPress={onForgotPasswordPressed}
