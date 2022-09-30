@@ -3,14 +3,15 @@ import React, {useState} from 'react';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
+import {useForm} from 'react-hook-form';
 
 const NewPasswordScreen = () => {
-  const [code, setCode] = useState('');
-  const [password, setPassword] = useState('');
-  const [cPassword, setCPassword] = useState('');
+  const {control, handleSubmit, watch} = useForm();
   const navigation = useNavigation();
+  const pwd = watch('password');
 
-  const onResetPressed = () => {
+  const onResetPressed = data => {
+    console.log(data);
     navigation.navigate('Home');
   };
 
@@ -22,21 +23,36 @@ const NewPasswordScreen = () => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.root}>
         <Text style={styles.title}>Set New Password</Text>
-        <CustomInput placeholder={`Code`} value={code} setValue={setCode} />
         <CustomInput
+          name={`code`}
+          placeholder={`Code`}
+          control={control}
+          rules={{required: 'Verification Code is required!'}}
+        />
+        <CustomInput
+          name={`password`}
           placeholder="Create New Password"
-          value={password}
-          setValue={setPassword}
+          control={control}
+          rules={{
+            required: 'Password is required!',
+            minLength: {
+              value: 8,
+              message: 'Password should be atleast 8 character long',
+            },
+          }}
           secureTextEntry
         />
         <CustomInput
+          name={`cpassword`}
           placeholder="Confirm New Password"
-          value={cPassword}
-          setValue={setCPassword}
+          control={control}
+          rules={{
+            validate: value => value === pwd || 'Password do not match',
+          }}
           secureTextEntry
         />
 
-        <CustomButton text={'Reset'} onPress={onResetPressed} />
+        <CustomButton text={'Reset'} onPress={handleSubmit(onResetPressed)} />
 
         <CustomButton
           text={`Back To Sign in`}
